@@ -1,5 +1,8 @@
 window.onload = () => {
-    document.querySelector('#viewer button').addEventListener('click', () => {
+    let classes = ['btn-primary', 'btn-danger', 'btn-success'];
+    let btn = document.querySelector('#viewer button');
+    let logs = document.querySelector('span#logs');
+    btn.addEventListener('click', () => {
         let  url = window.location.href;
         url = new URL(url);
         let fileID = url.searchParams.get("id");
@@ -16,9 +19,14 @@ window.onload = () => {
         http.open("POST", '?action=saveFile', true);
         http.onload = () => {
             if (http.readyState == 4 && http.status == 200) {
-                document.querySelector('div.logs').innerHTML = http.response;
+                data = JSON.parse(http.response);
+                logs.innerHTML = data.message;
+                btn.classList.remove(...classes);
+                btn.classList.add(`btn-${data.status}`);
                 setTimeout(() => {
-                    document.querySelector('div.logs').innerHTML = '';
+                    btn.classList.remove(...classes);
+                    btn.classList.add('btn-primary')
+                    logs.innerHTML = '';
                 }, 3000);
             }
         };

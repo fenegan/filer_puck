@@ -37,8 +37,9 @@ class FileController extends BaseController
     {
         $entityBody = file_get_contents('php://input');
         $fileManager = new FileManager();
-        $logs = $fileManager->saveFile($entityBody);
-        return $logs;
+        $data = $fileManager->saveFile($entityBody);
+        $data = json_encode($data);
+        return $data;
     }
     
     public function uploadAction()
