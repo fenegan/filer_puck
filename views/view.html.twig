@@ -1,0 +1,25 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}Viewing {{ file.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ file.name }}</h1>
+    
+    <div id="viewer">
+        {% if ext in ['wav', 'mp3', 'ogg'] %}
+        <audio src="{{ path }}" controls autoplay></audio>
+        {% elseif ext in ['mp4', 'webm', 'avi', 'mkv'] %}
+        <video src="{{ path }}" controls autoplay></video>
+        {% elseif ext in ['jpg', 'jpeg', 'png', 'bmp', 'gif'] %}
+        <img src="{{ path }}" alt="{{ file.name }}"></img>
+        {% elseif ext in ['pdf', 'html'] %}
+        <iframe src="{{ path }}&amp;iframe"></iframe>
+        {% elseif ext in ['txt', 'php'] %}
+        <button class="btn btn-primary">Save</button>
+        <br>
+        <textarea>{{ content }}</textarea>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
