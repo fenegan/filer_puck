@@ -16,9 +16,12 @@
         {% elseif ext in ['pdf', 'html'] %}
         <iframe src="{{ path }}&amp;iframe"></iframe>
         {% elseif ext in ['txt', 'php'] %}
-        <button class="btn btn-primary">Save</button>
+        <div class="save">
+        <button class="btn btn-primary" id="btn">Save</button>
+        <p id="result" class="alert"></p>
+        </div>
         <br>
-        <textarea>{{ content }}</textarea>
+        <textarea data-name="{{ file.name }}" data-id="{{ file.id }}">{{ content }}</textarea>
         {% endif %}
     </div>
 </div>
