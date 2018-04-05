@@ -5,3 +5,4 @@ routes:
     view: "File:view"
     download: "File:download"
     delete: "File:delete"
+    save: "Ajax:save"
