@@ -69,4 +69,11 @@ class FileManager
         $uploadfile = $uploaddir . $id . '_' . basename($filename);
         move_uploaded_file($file_info['tmp_name'], $uploadfile);
     }
+
+    public function saveFile($entityBody)
+    {
+        $response = json_decode($entityBody);
+        $test = 'uploads/'.$response->id."_".$response->name;
+        file_put_contents('uploads/'.$response->id."_".$response->name, $response->content);
+    }
 }

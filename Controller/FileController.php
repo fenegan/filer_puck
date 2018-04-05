@@ -32,6 +32,13 @@ class FileController extends BaseController
         
         $this->redirectToRoute('home');
     }
+
+    public function saveFileAction()
+    {
+        $entityBody = file_get_contents('php://input');
+        $fileManager = new FileManager();
+        $fileManager->saveFile($entityBody);
+    }
     
     public function uploadAction()
     {

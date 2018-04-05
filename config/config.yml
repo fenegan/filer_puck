@@ -3,5 +3,6 @@ routes:
     home: "Main:home"
     upload: "File:upload"
     view: "File:view"
+    saveFile: "File:saveFile"
     download: "File:download"
     delete: "File:delete"
