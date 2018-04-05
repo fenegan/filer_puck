@@ -69,4 +69,15 @@ class FileManager
         $uploadfile = $uploaddir . $id . '_' . basename($filename);
         move_uploaded_file($file_info['tmp_name'], $uploadfile);
     }
+        public function replaceContent($filePath,$content){
+            if(file_put_contents($filePath, $content) === false){ 
+                $arr['status'] = 'failed';
+                $arr['result'] = 'Save failed';
+            } else{
+                $arr['status'] = 'ok';
+                $arr['result'] = 'Save completed';
+            }
+            $arr = json_encode($arr);
+            return $arr;
+    }
 }
