@@ -14,6 +14,14 @@ window.onload = () => {
         
         let  http = new XMLHttpRequest();
         http.open("POST", '?action=saveFile', true);
+        http.onload = () => {
+            if (http.readyState == 4 && http.status == 200) {
+                document.querySelector('div.logs').innerHTML = http.response;
+                setTimeout(() => {
+                    document.querySelector('div.logs').innerHTML = '';
+                }, 3000);
+            }
+        };
         let req = JSON.stringify(obj)
         http.send(req);
     })

@@ -74,6 +74,11 @@ class FileManager
     {
         $response = json_decode($entityBody);
         $test = 'uploads/'.$response->id."_".$response->name;
-        file_put_contents('uploads/'.$response->id."_".$response->name, $response->content);
+        $status = file_put_contents('uploads/'.$response->id."_".$response->name, $response->content);
+        if (in_array($status, [false, 0, null])) {
+            return "Failed saving the file !";
+        } else {
+            return "File saved !";
+        }
     }
 }
