@@ -4,9 +4,25 @@ namespace Controller;
 
 use Cool\BaseController;
 use Model\FileManager;
+use Model\FolderManager;
 
 class FileController extends BaseController
 {
+    public function createFolderAction()
+    {
+        if (isset($_POST['folder_name']) && isset($_POST['location']))
+        {
+            $folderManager = new FolderManager();
+            $folderManager->createFolder($_POST['folder_name'],
+                                         $_POST['location']);
+            
+            if (intval($_POST['location']) != 0)                       
+                $this->redirectToRoute('home', 'location='.$_POST['location']);
+        }
+
+        $this->redirectToRoute('home');
+    }
+    
     public function editAction()
     {
         if (isset($_GET['id']) && $id = intval($_GET['id']))
@@ -48,11 +64,17 @@ class FileController extends BaseController
     
     public function uploadAction()
     {
-        if (isset($_FILES['file']) and isset($_POST['filename']))
+        if (isset($_FILES['file'])
+            && isset($_POST['filename'])
+            && isset($_POST['location']))
         {
             $fileManager = new FileManager();
             $fileManager->uploadFile($_FILES['file'],
-                                     $_POST['filename']);
+                                     $_POST['filename'],
+                                     $_POST['location']);
+            
+            if (intval($_POST['location']) != 0)                       
+                $this->redirectToRoute('home', 'location='.$_POST['location']);
         }
         
         $this->redirectToRoute('home');

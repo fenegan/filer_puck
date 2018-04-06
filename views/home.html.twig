@@ -22,11 +22,33 @@
         <label for="filename" class="col-sm-2 col-form-label">Filename :</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="filename" name="filename">
+          <input type="hidden" name="location" value="{{ location }}">
         </div>
       </div>
       <button type="submit" class="btn btn-primary mb-2">Upload</button>
     </fieldset>
   </form>
+  <form action="?action=create_folder" method="POST">
+    <fieldset class="form-group">
+      <legend class="col-form-label col-sm-2 pt-0">Create a folder</legend>
+      <div class="form-group row">
+        <label for="folder_name" class="col-sm-2 col-form-label">Name :</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="folder_name" name="folder_name" required>
+          <input type="hidden" name="location" value="{{ location }}">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary mb-2">Create</button>
+    </fieldset>
+  </form>
+  <div class="row">
+    <h3>
+      <a href="?action=home">Home</a>
+      {% for folder in breadcrumbs %}
+      / <a href="?action=home&amp;location={{ folder.id }}">{{ folder.name }}</a>
+      {% endfor %}
+    </h3>
+  </div>
   <div class="row">
     <table class="table table-striped table-bordered">
       <thead>
@@ -37,7 +59,17 @@
         </tr>
       </thead>
       <tbody>
-        {% for file in files %}
+        {% for folder in files if folder.type == 'folder' %}
+        <tr>
+          <td>{{ folder.name }}</td>
+          <td>{{ folder.upload_date }}</td>
+          <td>
+            <a href="?action=home&amp;location={{ folder.id }}" class="btn btn-success">Go To</a>
+            <a href="?action=delete&amp;id={{ folder.id }}" class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+        {% for file in files if file.type == 'file' %}
         <tr>
           <td>{{ file.name }}</td>
           <td>{{ file.upload_date }}</td>
