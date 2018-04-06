@@ -23,8 +23,35 @@
             </div>
         </div>
         <br>
-        <textarea>{{ content }}</textarea>
+        <textarea id="text-content">{{ content }}</textarea>
         {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    function json(response) {
+      return response.json()
+    }
+    $('#text-edit').click(function () {
+        console.log('click');
+        var url = '?action=edit&id='+'{{ file.id }}';
+        fetch(url, {
+            method: 'post',
+            headers: {
+              "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: 'content='+JSON.stringify($('#text-content').val()),
+            credentials: 'include'
+          })
+          .then(json)
+          .then(function (data) {
+            console.log('Request succeeded with JSON response', data);
+          })
+          .catch(function (error) {
+            console.log('Request failed', error);
+          });
+    });
+</script>
 {% endblock %}
