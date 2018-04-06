@@ -7,6 +7,19 @@ use Model\FileManager;
 
 class FileController extends BaseController
 {
+    public function editAction()
+    {
+        if (isset($_GET['id']) && $id = intval($_GET['id']))
+        {
+            $fileManager = new FileManager();
+            $file = $fileManager->findById($id);
+            $path = './uploads/'.$file['id'].'_'.$file['name'];
+            file_put_contents($path, json_decode($_POST['content']));
+        }
+        
+        return json_decode($_POST['content']);
+    }
+
     public function viewAction()
     {
         if (isset($_GET['id']) && $id = intval($_GET['id']))
