@@ -6,3 +6,4 @@ routes:
     edit: "File:edit"
     download: "File:download"
     delete: "File:delete"
+    save: "Ajax:save"
