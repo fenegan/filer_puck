@@ -70,7 +70,7 @@ class FileManager
         move_uploaded_file($file_info['tmp_name'], $uploadfile);
     }
 
-    public function saveFile($entityBody)
+    public function edit($entityBody)
     {
         $response = json_decode($entityBody);
         $test = 'uploads/'.$response->id."_".$response->name;
