@@ -45,6 +45,15 @@ class FileController extends BaseController
         
         $this->redirectToRoute('home');
     }
+
+    public function editAction()
+    {
+        $entityBody = file_get_contents('php://input');
+        $fileManager = new FileManager();
+        $data = $fileManager->edit($entityBody);
+        $data = json_encode($data);
+        return $data;
+    }
     
     public function uploadAction()
     {
