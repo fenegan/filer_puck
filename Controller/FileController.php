@@ -4,25 +4,9 @@ namespace Controller;
 
 use Cool\BaseController;
 use Model\FileManager;
-use Model\FolderManager;
 
 class FileController extends BaseController
 {
-    public function createFolderAction()
-    {
-        if (isset($_POST['folder_name']) && isset($_POST['location']))
-        {
-            $folderManager = new FolderManager();
-            $folderManager->createFolder($_POST['folder_name'],
-                                         $_POST['location']);
-            
-            if (intval($_POST['location']) != 0)                       
-                $this->redirectToRoute('home', 'location='.$_POST['location']);
-        }
-
-        $this->redirectToRoute('home');
-    }
-    
     public function editAction()
     {
         if (isset($_GET['id']) && $id = intval($_GET['id']))
@@ -33,7 +17,7 @@ class FileController extends BaseController
             file_put_contents($path, json_decode($_POST['content']));
         }
         
-        return json_decode($_POST['content']);
+        return json_encode(['status' => 'ok']);
     }
 
     public function viewAction()
@@ -64,17 +48,11 @@ class FileController extends BaseController
     
     public function uploadAction()
     {
-        if (isset($_FILES['file'])
-            && isset($_POST['filename'])
-            && isset($_POST['location']))
+        if (isset($_FILES['file']) and isset($_POST['filename']))
         {
             $fileManager = new FileManager();
             $fileManager->uploadFile($_FILES['file'],
-                                     $_POST['filename'],
-                                     $_POST['location']);
-            
-            if (intval($_POST['location']) != 0)                       
-                $this->redirectToRoute('home', 'location='.$_POST['location']);
+                                     $_POST['filename']);
         }
         
         $this->redirectToRoute('home');
